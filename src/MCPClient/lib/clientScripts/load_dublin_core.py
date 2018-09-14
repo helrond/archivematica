@@ -32,6 +32,15 @@ def main(job, sip_uuid, dc_path):
             job.pyprint("Invalid DC attribute:", key, file=sys.stderr)
 
     dc.save()
+
+    # Now we can safely remove the file. If we don't do this, the file will
+    # be included in the metadata directory of the AIP.
+    # See https://projects.artefactual.com/issues/11013 for more details.
+    try:
+        os.remove(dc_path)
+    except Exception as err:
+        job.pyprint("Unable to remove `dc.json`:", err, file=sys.stderr)
+
     return 0
 
 
