@@ -24,6 +24,7 @@ from main.models import UserProfile
 
 
 class UserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
     is_superuser = forms.BooleanField(label="Administrator", required=False)
 
     def clean_password1(self):
